@@ -1,0 +1,19 @@
+# Decides the language {ab* or ac*}.
+#nao é possivel fazer duas transações ao mesmo tempo como em e1
+#q deveria der a indo para e4 virando c e a virando b indo para
+#e2 para criei dua linhas e1 para o teste dos dois casos
+
+input: <abbbbbbbbbbb # try a, acccc, bcccbba, ab
+blank: ' '
+start state: start
+
+table:
+  
+  start:  { <: {R: e1}}
+  e1:     {a: {write: b,R: e2},b: R, c: R}
+  #e1:     {a: {write: c,R: e4},b: R, c: R}
+  e2:     {b: R, ' ': {L: e3}}
+  e3:     {b: L, <: {R: e6}}
+  e4:     {c: R, ' ': {L: e5}}
+  e5:     {c: L, <: {R: e6}}
+  e6: 

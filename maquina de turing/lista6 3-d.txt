@@ -1,0 +1,16 @@
+# Decides the language {{0,1}+}.
+#nao é possivel fazer duas transações ao mesmo tempo como em e1
+#q deveria der a indo para e4 virando c e a virando b indo para
+#e2 para criei dua linhas e1 para o teste dos dois casos
+
+input:  '0100011' #try 1, 010, 0101010111, 000011001
+blank: ' '
+start state: λ
+
+table:
+  
+  λ:    {1: {write: 0, R: 1}, 0: {R: 0}}
+  1:    {1: R, 0: {write: 1, R: 0}, ' ': {write: 0, L: w1}}
+  0:    {0: R, 1: {write: 0, R: 1}, ' ': {write: 1, R: fim}}  
+  w1:   {1: {write: 0, L}, 0: {write: 1, L: fim}}
+  fim:

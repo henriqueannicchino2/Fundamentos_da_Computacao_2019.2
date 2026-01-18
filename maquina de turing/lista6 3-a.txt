@@ -1,0 +1,14 @@
+# Decides the language {ww^(r) | w ∈ {a,b}*}.
+
+input: aabbaa # try aa, bab, bababbabab, bababbbaa
+blank: ' '
+start state: 1
+
+table:
+  
+  1:  {a: {write: ' ',R: 2a}, b: {write: ' ',R: 2b},}
+  2a:     {a: R, b: R, ' ': {L: 3a}}
+  3a:     {a: {write: ' ', L: 4}}
+  4:      {a: L, b: L, ' ':{R: 1}}
+  2b:     {a: R, b: R, ' ': {L: 3b}}
+  3b:     {b: {write: ' ', L: 4}}

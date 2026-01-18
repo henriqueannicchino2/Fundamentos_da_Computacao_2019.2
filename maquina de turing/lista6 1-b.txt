@@ -1,0 +1,19 @@
+# Decides the language {w|w ∈ {a,b,c}* e w tem o mesmo número de símbolos a,b e c}.
+
+input: <aabbcc # try abc, b, aabcbc, ccaabb, bbbbaaaacccc
+blank: ' '
+start state: start
+
+table:
+  
+  start:  {        <: {R: q0}}
+  q0:     {A: R, b: R, B: R, c: R, C: R, a: {write: A, L: q1},
+  ' ': {L: accept}}
+  q1:     {A: L, b: L, B: L, c: L, C: L,   <: {R: q2}}
+  q2:     {a: R, A: R, B: R, c: R, C: R, b: {write: B, L: q3}}
+  q3:     {a: L, A: L, B: L, c: L, C: L,   <: {R: q4}}
+  q4:     {a: R, A: R,b: R, B: R, C: R, c: {write: C, L: q5}}
+  q5:     {a: L, A: L,b: L, B: L, C: L,   <: {R: q0}}
+
+  accept: {A: L,B: L, C: L, a: {L: reject}, b: {L: reject},c: {L: reject},}
+  reject:

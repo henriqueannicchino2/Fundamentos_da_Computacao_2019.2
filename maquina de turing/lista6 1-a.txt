@@ -1,0 +1,22 @@
+# Decides the language { a^(i)b^(j)c^(k) | i*j = k}.
+
+input: <aabbbcccc# try abc, b, aabcbc, aabcc, aabbbbcccccccc
+blank: ' '
+start state: start
+
+table:
+
+  start:  {        <: {R: q0}}
+  q0:     {a: R,b: R,c: R,   ' ': {write: '#',L: q1}}
+  q1:     {a: L,b: L,c: L,   <: {R: q2}}
+  q2: {       '#': {L: accept},b: {R: q11},a:{write: A, R: q9}}
+  q3:     {a: R,              b: {write: B, R: q4}, C: {L: q7}}
+  q4:     {C: R,b: R,        c: {write: C, R: q5}}
+  q5: {b: L,c: L, C: L, B: {R: q3},'#': {L: accept}}
+  q7:     {a: L, B: {write: b, L}, A: {R: q8}}
+  q8:     {         a: {write: A, R: q3}, b: {R: reject}}
+  q9:     {a: R,  b: {write: B, R: q4}, c: {R: reject}}
+  reject:
+  q11:    {b: R,      a: {R: reject},c: {R: reject},'#': {L: accept}}
+
+  accept: {a: {L: reject}, b: {L: reject}, A: {write: a, L}, B: {write: b, L}, C: {write: c, L}}

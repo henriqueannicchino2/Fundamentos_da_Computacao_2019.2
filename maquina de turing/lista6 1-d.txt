@@ -1,0 +1,21 @@
+# Decides the language {a^(i)b^(j)a^(i)b^(j) | i,j>0}.
+
+input: <aabbbaabbb # try bb, a, aabaab, abab, aaaaaabbbaaaabbb
+blank: ' '
+start state: start
+
+table:
+  
+  start:  {        <: {R: q0}}
+  q0:     {a: {write: A, R: q1}, b: {R: accept}}
+  q1:     {a: R,   b: {R: q2}}
+  q2:     {A: R, b: R, a: {write: A, L: q3}}
+  q3:     {a: L, b: L, A: L, <: {R: q4}}
+  q4:     {A: R, a: {write: A, R: q1}, b: {write: B, R: q5}}
+  q5:     {b: R, A: {R: q6}}
+  q6:     {A: R, B: R, b: {write: B, L: q7}}
+  q7:     {A: L, B: L, b: L, <:{R: q8}}
+  q8:     {A: R, B: R, b: {write: B, R: q5}, ' ': {R: accept}}
+
+  accept: {b: R, a: {R: reject}}
+  reject:

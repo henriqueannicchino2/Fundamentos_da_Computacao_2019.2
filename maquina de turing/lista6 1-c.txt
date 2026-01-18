@@ -1,0 +1,21 @@
+# Decides the language {ww^(R) | w ∈ {0,1}*}.
+
+input: <101101 # try 11, 1, 001100, 1100111, 001110011100
+blank: ' '
+start state: start
+
+table:
+  
+  start:  {        <: {R: q0}}
+  q0:     {0: R, 1: R, ' ': {write: '#', L: q1}}
+  q1:     {0: L, 1: L,   <: {R: q2}}
+  q2:     {0: R, 1: R, '#': {L: q3}}
+  q3:     {1: {write: '#', L: q4}, 0: {write: '#', L: q6},
+      <: {R: accept}}
+  q4:     {0: L, 1: L, <: {R: q5}}
+  q5:     {0: {R: reject}, 1: {write: <, R: q2}}
+  q6:     {0: L, 1: L, <: {R: q7}}
+  q7:     {1: {R: reject}, 0: {write: <, R: q2}}
+
+  accept:
+  reject:

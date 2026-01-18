@@ -1,0 +1,23 @@
+# Decides the language {recebendo como entrada uma cadeia de a’s e b’s e uma quantidade n de caracteres X, escrevendo ao final da fita os X*n primeiros caracteres da cadeia. Por exemplo:
+Para a entrada: aabbabba#XXX A saída deverá ser: aababba#XXX#aab}.
+
+input: <bbabaaa#XXXX # try bb#X, a#, aabaab#XXXXXX, aabbabba#XXX
+blank: ' '
+start state: start
+
+table:
+  
+  start:  {        <: {R: q0}}
+  q0:     {a: R, b: R, '#': R, X: R, ' ': {write: '#', L: q1}}
+  q1: {'#': {R: accept}, ' ': {R: accept}, X: {write: x, L: q2}}
+  q2:     {a: L, A: L, b: L, B: L, '#': L, X: L, <: {R: q3}}
+  q3:   {A: R, B: R, a: {write: A, R: q4}, b: {write: B, R: q6}}
+  q4:     {a: R, A: R, b: R, B: R, '#': R, x: R, X: R, 
+        ' ': {write: a, L: q5}}
+  q5:     {a: L, b: L, '#': L, x: L, X: {write: x, L: q2}, 
+        B: {write: b, L: q7}, A: {write: a, L: q7}}
+  q6:     {a: R, A: R, b: R, B: R, '#': R, x: R, X: R, 
+        ' ': {write: b, L: q5}}
+  q7:     {A: {write: a, L}, B: {write: b, L}, <: {R: accept}}
+
+  accept: {a: R, b: R, '#': R, x: {write: X, R}}
